@@ -10,6 +10,7 @@ import me.phantomclone.permissionsystem.service.permission.PermissionService;
 import me.phantomclone.permissionsystem.service.permission.UserPermissionService;
 import me.phantomclone.permissionsystem.service.rank.RankService;
 import me.phantomclone.permissionsystem.service.rank.UserRankService;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
@@ -19,10 +20,14 @@ import java.sql.SQLException;
 import java.util.Properties;
 import java.util.concurrent.*;
 
+import static org.mockito.Mockito.mock;
+
 class AbstractServiceIntegrationTest {
 
   static HikariDataSource dataSource;
   static ExecutorService executorService;
+
+  JavaPlugin mockPlugin;
 
   PermissionRepository permissionRepository;
   RankRepository rankRepository;
@@ -55,6 +60,8 @@ class AbstractServiceIntegrationTest {
 
   @BeforeEach
   void beforeEach() {
+    mockPlugin = mock(JavaPlugin.class);
+
     this.permissionRepository =
         new PermissionRepository(dataSource, () -> command -> executorService.execute(command));
     this.rankRepository =
@@ -75,7 +82,7 @@ class AbstractServiceIntegrationTest {
     this.userPermissionService = new UserPermissionService(userPermissionRepository);
     this.userRankService = new UserRankService(userRankRepository);
     this.userPermissionRankService =
-        new UserPermissionRankService(userRankService, userPermissionService);
+        new UserPermissionRankService(mockPlugin, userRankService, userPermissionService);
   }
 
   @AfterEach

@@ -3,6 +3,9 @@ package me.phantomclone.permissionsystem;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
+import me.phantomclone.permissionsystem.cache.PlayerPermissionRankUserCacheListener;
+import me.phantomclone.permissionsystem.entity.rank.Rank;
+import me.phantomclone.permissionsystem.listener.login.PlayerLoginListener;
 import me.phantomclone.permissionsystem.repository.permission.PermissionRepository;
 import me.phantomclone.permissionsystem.repository.rank.RankRepository;
 import me.phantomclone.permissionsystem.repository.permission.UserPermissionRepository;
@@ -35,6 +38,8 @@ public class PermissionSystemPlugin extends JavaPlugin {
   private UserPermissionService userPermissionService;
   private UserRankService userRankService;
 
+  private PlayerPermissionRankUserCacheListener playerPermissionRankUserCacheListener;
+
   @Override
   public void onLoad() {
     saveResource(DATASOURCE_PROPERTY, false);
@@ -63,7 +68,25 @@ public class PermissionSystemPlugin extends JavaPlugin {
     this.userPermissionService = new UserPermissionService(userPermissionRepository);
     this.userRankService = new UserRankService(userRankRepository);
     this.userPermissionRankService =
-        new UserPermissionRankService(userRankService, userPermissionService);
+        new UserPermissionRankService(this, userRankService, userPermissionService);
+  }
+
+  @Override
+  public void onEnable() {
+    this.playerPermissionRankUserCacheListener =
+        new PlayerPermissionRankUserCacheListener(userPermissionRankService);
+
+    getServer().getPluginManager().registerEvents(playerPermissionRankUserCacheListener, this);
+
+    Rank defaultRank =
+        rankService
+            .getRank("default")
+            .join()
+            .orElse(rankService.createOrUpdateRank("default", 0, "<gray>User", null).join());
+
+    new PlayerLoginListener(
+            this, getLogger(), playerPermissionRankUserCacheListener, userRankService, userPermissionRankService, defaultRank)
+        .register();
   }
 
   @Override

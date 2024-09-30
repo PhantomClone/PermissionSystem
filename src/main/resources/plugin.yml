@@ -2,5 +2,5 @@ name: PermissionSystem
 main: me.phantomclone.permissionsystem.PermissionSystemPlugin
 author: PhantomClone
 version: ${version}
-description: A small warp plugin :)
+description: Playlegend applicant task
 commands:
