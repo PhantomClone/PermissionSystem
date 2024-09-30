@@ -1,9 +1,9 @@
-package me.phantomclone.permissionsystem.service;
+package me.phantomclone.permissionsystem.service.rank;
 
 import lombok.RequiredArgsConstructor;
 import me.phantomclone.permissionsystem.entity.rank.Rank;
 import me.phantomclone.permissionsystem.entity.rank.UserRank;
-import me.phantomclone.permissionsystem.repository.UserRankRepository;
+import me.phantomclone.permissionsystem.repository.rank.UserRankRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;

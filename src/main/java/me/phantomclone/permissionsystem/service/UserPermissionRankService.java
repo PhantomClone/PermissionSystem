@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import me.phantomclone.permissionsystem.entity.PermissionRankUser;
 import me.phantomclone.permissionsystem.entity.permission.UserPermission;
 import me.phantomclone.permissionsystem.entity.rank.UserRank;
+import me.phantomclone.permissionsystem.service.permission.UserPermissionService;
+import me.phantomclone.permissionsystem.service.rank.UserRankService;
 
 import java.util.List;
 import java.util.UUID;

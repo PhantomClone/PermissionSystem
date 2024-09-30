@@ -1,9 +1,9 @@
-package me.phantomclone.permissionsystem.service;
+package me.phantomclone.permissionsystem.service.permission;
 
 import lombok.RequiredArgsConstructor;
 import me.phantomclone.permissionsystem.entity.permission.Permission;
 import me.phantomclone.permissionsystem.entity.permission.UserPermission;
-import me.phantomclone.permissionsystem.repository.UserPermissionRepository;
+import me.phantomclone.permissionsystem.repository.permission.UserPermissionRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;

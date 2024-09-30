@@ -1,4 +1,4 @@
-package me.phantomclone.permissionsystem.repository;
+package me.phantomclone.permissionsystem.repository.rank;
 
 import de.chojo.sadu.base.QueryFactory;
 import de.chojo.sadu.wrapper.QueryBuilderConfig;
@@ -6,7 +6,7 @@ import de.chojo.sadu.wrapper.util.ParamBuilder;
 import de.chojo.sadu.wrapper.util.Row;
 import de.chojo.sadu.wrapper.util.UpdateResult;
 import me.phantomclone.permissionsystem.entity.rank.UserRank;
-import me.phantomclone.permissionsystem.service.RankService;
+import me.phantomclone.permissionsystem.service.rank.RankService;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;

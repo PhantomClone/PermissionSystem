@@ -1,8 +1,8 @@
-package me.phantomclone.permissionsystem.service;
+package me.phantomclone.permissionsystem.service.permission;
 
 import lombok.RequiredArgsConstructor;
 import me.phantomclone.permissionsystem.entity.permission.Permission;
-import me.phantomclone.permissionsystem.repository.PermissionRepository;
+import me.phantomclone.permissionsystem.repository.permission.PermissionRepository;
 
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;

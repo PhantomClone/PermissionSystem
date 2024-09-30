@@ -1,4 +1,4 @@
-package me.phantomclone.permissionsystem.repository;
+package me.phantomclone.permissionsystem.repository.permission;
 
 import de.chojo.sadu.base.QueryFactory;
 import de.chojo.sadu.wrapper.QueryBuilderConfig;

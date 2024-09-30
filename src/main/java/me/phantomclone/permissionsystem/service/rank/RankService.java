@@ -1,9 +1,9 @@
-package me.phantomclone.permissionsystem.service;
+package me.phantomclone.permissionsystem.service.rank;
 
 import lombok.RequiredArgsConstructor;
 import me.phantomclone.permissionsystem.entity.permission.Permission;
 import me.phantomclone.permissionsystem.entity.rank.Rank;
-import me.phantomclone.permissionsystem.repository.RankRepository;
+import me.phantomclone.permissionsystem.repository.rank.RankRepository;
 
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;

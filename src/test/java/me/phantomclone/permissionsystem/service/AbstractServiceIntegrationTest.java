@@ -2,10 +2,14 @@ package me.phantomclone.permissionsystem.service;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import me.phantomclone.permissionsystem.repository.PermissionRepository;
-import me.phantomclone.permissionsystem.repository.RankRepository;
-import me.phantomclone.permissionsystem.repository.UserPermissionRepository;
-import me.phantomclone.permissionsystem.repository.UserRankRepository;
+import me.phantomclone.permissionsystem.repository.permission.PermissionRepository;
+import me.phantomclone.permissionsystem.repository.rank.RankRepository;
+import me.phantomclone.permissionsystem.repository.permission.UserPermissionRepository;
+import me.phantomclone.permissionsystem.repository.rank.UserRankRepository;
+import me.phantomclone.permissionsystem.service.permission.PermissionService;
+import me.phantomclone.permissionsystem.service.permission.UserPermissionService;
+import me.phantomclone.permissionsystem.service.rank.RankService;
+import me.phantomclone.permissionsystem.service.rank.UserRankService;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
