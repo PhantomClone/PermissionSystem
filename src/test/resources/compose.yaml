@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:14.2
+    environment:
+      POSTGRES_USER: permissionsystem
+      POSTGRES_PASSWORD: permissionsystem
+      POSTGRES_DB: permissionsystem
+    ports:
+      - "5432:5432"
