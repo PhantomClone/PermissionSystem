@@ -96,11 +96,9 @@ public class PlayerLoginListener implements Listener {
             .orElseThrow()
             .prefix()
             .append(Component.text(" "))
+            .append(Component.text(event.getPlayer().getName()))
             .append(
-                Component.text(event.getPlayer().getName())
-                    .append(
-                        Component.text(" has joined the Server!")
-                            .color(TextColor.color(255, 255, 255))));
+                Component.text(" has joined the Server!").color(TextColor.color(255, 255, 255)));
 
     event.joinMessage(joinMessage);
   }
