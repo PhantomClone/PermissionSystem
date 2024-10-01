@@ -35,7 +35,7 @@ public class LanguageChangeLocaleCommand {
 
   @CommandTabArgument(value = "locale")
   public List<String> localeTab(String argument) {
-    return Stream.of(Locale.GERMANY, Locale.ENGLISH)
+    return Stream.of(Locale.GERMANY, Locale.US)
         .map(Locale::toString)
         .filter(localeString -> localeString.startsWith(argument))
         .toList();
