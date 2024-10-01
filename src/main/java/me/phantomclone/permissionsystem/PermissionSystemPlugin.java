@@ -1,10 +1,16 @@
 package me.phantomclone.permissionsystem;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
 import me.phantomclone.permissionsystem.cache.PlayerPermissionRankUserCacheListener;
+import me.phantomclone.permissionsystem.command.CommandExecutor;
+import me.phantomclone.permissionsystem.command.CommandRegistry;
 import me.phantomclone.permissionsystem.entity.rank.Rank;
+import me.phantomclone.permissionsystem.language.LanguageService;
+import me.phantomclone.permissionsystem.language.LanguageUserService;
 import me.phantomclone.permissionsystem.listener.chat.AsyncChatEventListener;
 import me.phantomclone.permissionsystem.listener.login.PlayerLoginListener;
 import me.phantomclone.permissionsystem.repository.permission.PermissionRepository;
@@ -16,15 +22,27 @@ import me.phantomclone.permissionsystem.service.permission.PermissionService;
 import me.phantomclone.permissionsystem.service.permission.UserPermissionService;
 import me.phantomclone.permissionsystem.service.rank.RankService;
 import me.phantomclone.permissionsystem.service.rank.UserRankService;
+import me.phantomclone.permissionsystem.visual.sidebar.SidebarService;
+import me.phantomclone.permissionsystem.visual.sign.PermissionSignPacketAdapterListener;
+import me.phantomclone.permissionsystem.visual.tablist.TabListService;
+import org.apache.commons.lang3.LocaleUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.concurrent.Executor;
 import java.util.logging.Level;
+import java.util.stream.Stream;
 
 @Getter
 public class PermissionSystemPlugin extends JavaPlugin {
 
   private static final String DATASOURCE_PROPERTY = "datasource.properties";
+
+  private ProtocolManager protocolManager;
 
   private HikariDataSource dataSource;
 
@@ -39,10 +57,21 @@ public class PermissionSystemPlugin extends JavaPlugin {
   private UserPermissionService userPermissionService;
   private UserRankService userRankService;
 
+  private LanguageService languageService;
+  private LanguageUserService languageUserService;
+
+  private CommandRegistry commandRegistry;
+  private CommandExecutor commandExecutor;
+
+  private SidebarService sidebarService;
+  private TabListService tabListService;
+
   private PlayerPermissionRankUserCacheListener playerPermissionRankUserCacheListener;
 
   @Override
   public void onLoad() {
+    protocolManager = ProtocolLibrary.getProtocolManager();
+
     saveResource(DATASOURCE_PROPERTY, false);
 
     dataSource =
@@ -70,6 +99,23 @@ public class PermissionSystemPlugin extends JavaPlugin {
     this.userRankService = new UserRankService(userRankRepository);
     this.userPermissionRankService =
         new UserPermissionRankService(this, userRankService, userPermissionService);
+
+    this.languageUserService = new LanguageUserService(this);
+    this.languageService = new LanguageService(languageUserService);
+
+    this.commandExecutor = new CommandExecutor(this, getLogger(), languageService);
+    this.commandRegistry = new CommandRegistry(this, commandExecutor);
+
+    this.sidebarService = new SidebarService();
+
+    if (!new File(new File(getDataFolder(), "languages"), "de_DE.json").exists()) {
+      saveResource("languages/de_DE.json", true);
+    }
+    if (!new File(new File(getDataFolder(), "languages"), "en.json").exists()) {
+      saveResource("languages/en_US.json", true);
+    }
+
+    loadLanguageFiles();
   }
 
   @Override
@@ -77,18 +123,36 @@ public class PermissionSystemPlugin extends JavaPlugin {
     this.playerPermissionRankUserCacheListener =
         new PlayerPermissionRankUserCacheListener(userPermissionRankService);
 
-    getServer().getPluginManager().registerEvents(new AsyncChatEventListener(playerPermissionRankUserCacheListener), this);
+    languageUserService.registerListener(this, commandRegistry);
+
+    getServer()
+        .getPluginManager()
+        .registerEvents(new AsyncChatEventListener(playerPermissionRankUserCacheListener), this);
     getServer().getPluginManager().registerEvents(playerPermissionRankUserCacheListener, this);
 
     Rank defaultRank =
         rankService
             .getRank("default")
             .join()
-            .orElse(rankService.createOrUpdateRank("default", 0, "<gray>User|", null).join());
+            .orElse(rankService.createOrUpdateRank("default", 0, "<gray>User", null).join());
+
+    this.tabListService = new TabListService(defaultRank);
 
     new PlayerLoginListener(
-            this, getLogger(), playerPermissionRankUserCacheListener, userRankService, userPermissionRankService, defaultRank)
+            this,
+            getLogger(),
+            playerPermissionRankUserCacheListener,
+            userRankService,
+            userPermissionRankService,
+            defaultRank,
+            sidebarService,
+            tabListService,
+            languageService)
         .register();
+
+    protocolManager.addPacketListener(
+        new PermissionSignPacketAdapterListener(
+            this, userPermissionRankService, languageService, defaultRank));
   }
 
   @Override
@@ -96,7 +160,40 @@ public class PermissionSystemPlugin extends JavaPlugin {
     dataSource.close();
   }
 
-  public Executor getAsyncExecutor() {
+  private Executor getAsyncExecutor() {
     return runnable -> getServer().getAsyncScheduler().runNow(this, task -> runnable.run());
+  }
+
+  private void loadLanguageFiles() {
+    File languagesFolder = new File(getDataFolder(), "languages/");
+    try (Stream<Path> langugesFilesStream = Files.list(Paths.get(languagesFolder.getPath()))) {
+      langugesFilesStream
+          .filter(
+              path ->
+                  path.getFileName().toString().matches("^[a-zA-Z]{2,3}(_[a-zA-Z]{2,3})?\\.json$"))
+          .map(Path::toFile)
+          .peek(file -> getLogger().log(Level.INFO, "Add language file:{0}", file.getName()))
+          .forEach(this::registerLanguageFile);
+    } catch (IOException ioException) {
+      getLogger().log(Level.SEVERE, "Error in loading language folder", ioException);
+    }
+  }
+
+  private void registerLanguageFile(File file) {
+    try {
+      languageService.registerMessages(LocaleUtils.toLocale(removeJsonEnding(file)), file);
+    } catch (Exception exception) {
+      getLogger()
+          .log(
+              Level.SEVERE,
+              String.format("Error in loading language file: %s", file.getName()),
+              exception);
+    }
+  }
+
+  private String removeJsonEnding(File file) {
+    String name = file.getName();
+
+    return name.substring(0, name.length() - ".json".length());
   }
 }

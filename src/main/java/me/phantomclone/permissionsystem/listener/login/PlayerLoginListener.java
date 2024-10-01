@@ -5,10 +5,14 @@ import me.phantomclone.permissionsystem.cache.PlayerPermissionRankUserCacheListe
 import me.phantomclone.permissionsystem.entity.PermissionRankUser;
 import me.phantomclone.permissionsystem.entity.rank.Rank;
 import me.phantomclone.permissionsystem.inject.PermissibleBaseListener;
+import me.phantomclone.permissionsystem.language.LanguageService;
 import me.phantomclone.permissionsystem.service.UserPermissionRankService;
 import me.phantomclone.permissionsystem.service.rank.UserRankService;
+import me.phantomclone.permissionsystem.visual.sidebar.SidebarService;
+import me.phantomclone.permissionsystem.visual.tablist.TabListService;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
@@ -23,12 +27,19 @@ import java.util.logging.Logger;
 @RequiredArgsConstructor
 public class PlayerLoginListener implements Listener {
 
+  private static final String SIDEBAR_TITLE_IDENTIFIER = "sidebar_title";
+  private static final String ROW_1_IDENTIFIER = "sidebar_row_1";
+  private static final String PLAYER_JOIN_IDENTIFIER = "player_join_message";
+
   private final JavaPlugin javaPlugin;
   private final Logger logger;
   private final PlayerPermissionRankUserCacheListener playerPermissionRankUserCacheListener;
   private final UserRankService userRankService;
   private final UserPermissionRankService userPermissionRankService;
   private final Rank defaultRank;
+  private final SidebarService sidebarService;
+  private final TabListService tabListService;
+  private final LanguageService languageService;
 
   @EventHandler
   public void onLogin(AsyncPlayerPreLoginEvent event) {
@@ -54,7 +65,6 @@ public class PlayerLoginListener implements Listener {
 
   @EventHandler
   public void onLogin(PlayerLoginEvent event) {
-    logger.log(Level.INFO, "Player login");
     CompletableFuture<PermissionRankUser> permissionRankUserCompletableFuture =
         playerPermissionRankUserCacheListener.getPermissionRankUser(
             event.getPlayer().getUniqueId());
@@ -89,18 +99,43 @@ public class PlayerLoginListener implements Listener {
           event.getPlayer().getName());
     }
 
+    PermissionRankUser permissionRankUser = permissionRankUserCompletableFuture.join();
+    Rank rank = permissionRankUser.highestRank().orElseThrow();
     Component joinMessage =
-        permissionRankUserCompletableFuture
-            .join()
-            .highestRank()
-            .orElseThrow()
-            .prefix()
-            .append(Component.text(" "))
-            .append(Component.text(event.getPlayer().getName()))
+        rank.prefix()
             .append(
-                Component.text(" has joined the Server!").color(TextColor.color(255, 255, 255)));
+                languageService
+                    .getMessageComponent(PLAYER_JOIN_IDENTIFIER, event.getPlayer())
+                    .orElse(Component.text(" {player_name} has joined the Server!"))
+                    .replaceText(
+                        builder ->
+                            builder
+                                .match("\\{player_name\\}")
+                                .replacement(event.getPlayer().getName())));
 
     event.joinMessage(joinMessage);
+
+    setSidebarForPlayer(event.getPlayer(), rank);
+    tabListService.setPlayerTeams(event.getPlayer(), permissionRankUser);
+  }
+
+  private void setSidebarForPlayer(Player player, Rank rank) {
+    sidebarService.updateTitle(
+        player,
+        languageService
+            .getMessageComponent(SIDEBAR_TITLE_IDENTIFIER, player)
+            .orElse(Component.text("Permission Sidebar").color(TextColor.color(255, 0, 0))));
+    sidebarService.updateLine(player, sidebarService.createLine(0, Component.text(""), 0));
+    sidebarService.updateLine(player, sidebarService.createLine(1, rank.prefix(), 1));
+    sidebarService.updateLine(
+        player,
+        sidebarService.createLine(
+            2,
+            languageService
+                .getMessageComponent(ROW_1_IDENTIFIER, player)
+                .orElse(Component.text("Your Rank: ")),
+            2));
+    sidebarService.updateLine(player, sidebarService.createLine(3, Component.text(""), 3));
   }
 
   public void register() {

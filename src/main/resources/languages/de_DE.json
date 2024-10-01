@@ -1,0 +1,42 @@
+[
+  {
+    "identifier": "command_exception_error",
+    "messageComponent": "Ein unerwartet fehler ist Aufgetreten. Bitte melde das."
+  },
+  {
+    "identifier": "command_language_locale_help",
+    "messageComponent": "/language <locale> verändere deine Sprache"
+  },
+  {
+    "identifier": "command_language_locale_wrong_locale_format",
+    "messageComponent": "Falsches Locale Format. Bsp.: de_DE"
+  },
+  {
+    "identifier": "permission_sign_row_1",
+    "messageComponent": "Dein Rank:"
+  },
+  {
+    "identifier": "permission_sign_row_3",
+    "messageComponent": "Verbleibende Zeit:"
+  },
+  {
+    "identifier": "permission_sign_row_4_time_pattern",
+    "messageComponent": "{days} Tag(e), {hours} Stunde(n), {minutes} Minute(n) und {seconds} Sekunde(n)!"
+  },
+  {
+    "identifier": "permission_sign_row_4_infinity",
+    "messageComponent": "<rainbow>Unendlich"
+  },
+  {
+    "identifier": "sidebar_title",
+    "messageComponent": "<red>Permission Sidebar"
+  },
+  {
+    "identifier": "sidebar_row_1",
+    "messageComponent": "Dein Rank:"
+  },
+  {
+    "identifier": "player_join_message",
+    "messageComponent": " {player_name} <gray>ist dem Server beigetreten!"
+  }
+]

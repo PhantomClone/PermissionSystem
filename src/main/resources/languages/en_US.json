@@ -1,0 +1,42 @@
+[
+  {
+    "identifier": "command_exception_error",
+    "messageComponent": "An unexpected error has occurred. Please report this."
+  },
+  {
+    "identifier": "command_language_locale_help",
+    "messageComponent": "/language <locale> change your language"
+  },
+  {
+    "identifier": "command_language_locale_wrong_locale_format",
+    "messageComponent": "Invalid locale format. f.e.: en_US"
+  },
+  {
+    "identifier": "permission_sign_row_1",
+    "messageComponent": "Your Rank:"
+  },
+  {
+    "identifier": "permission_sign_row_3",
+    "messageComponent": "Time remaining:"
+  },
+  {
+    "identifier": "permission_sign_row_4_time_pattern",
+    "messageComponent": "{days} day(e), {hours} hour(s), {minutes} minute(s) und {seconds} second(s)!"
+  },
+  {
+    "identifier": "permission_sign_row_4_infinity",
+    "messageComponent": "<rainbow>Infinite"
+  },
+  {
+    "identifier": "sidebar_title",
+    "messageComponent": "<red>Permission Sidebar"
+  },
+  {
+    "identifier": "sidebar_row_1",
+    "messageComponent": "Your Rank:"
+  },
+  {
+    "identifier": "player_join_message",
+    "messageComponent": " {player_name} <gray>has joined the Server!"
+  }
+]

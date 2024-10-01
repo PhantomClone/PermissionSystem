@@ -30,7 +30,7 @@ public class AsyncChatEventListener implements Listener, ChatRenderer {
 
         return permissionRankUser.highestRank().map(Rank::prefix)
                 .orElse(Component.text().color(TextColor.color(255, 255, 255)).asComponent())
-                .append(Component.text(" "))
+                .append(Component.text(" | "))
                 .append(sourceDisplayName)
                 .append(Component.text(": ").color(TextColor.color(255, 255, 255)))
                 .append(message.color(TextColor.color(255, 255, 255)));
