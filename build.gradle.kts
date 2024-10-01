@@ -1,4 +1,10 @@
 import dev.s7a.gradle.minecraft.server.tasks.LaunchMinecraftServerTask
+import java.net.URI
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
 
 plugins {
     id("java")
@@ -19,12 +25,18 @@ repositories {
     maven {
         url = uri("https://repo.papermc.io/repository/maven-public/")
     }
+    maven {
+        url = uri("https://repo.dmulloy2.net/repository/public/")
+    }
 }
 
 dependencies {
     implementation("de.chojo.sadu", "sadu", "1.3.1")
     implementation("org.postgresql:postgresql:42.7.2")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.18.0")
 
+
+    compileOnly("com.comphenix.protocol:ProtocolLib:5.3.0-SNAPSHOT")
     compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
 
     compileOnly("org.projectlombok:lombok:1.18.34")
@@ -75,6 +87,32 @@ task<LaunchMinecraftServerTask>("testPlugin") {
         copy {
             from(layout.buildDirectory.dir("libs/${project.name}-${project.version}.jar"))
             into(layout.buildDirectory.dir("MinecraftServer/plugins"))
+        }
+
+        val pluginsDir = layout.buildDirectory.dir("MinecraftServer/plugins").get().asFile
+
+        val protocolLibUri = URI("https://ci.dmulloy2.net/job/ProtocolLib/732/artifact/build/libs/ProtocolLib.jar")
+        val protocolLibFile = File(pluginsDir, "ProtocolLib.jar").toPath()
+
+        if (!Files.exists(protocolLibFile)) {
+            println("ProtocolLib missing. Start download...")
+
+            val client = HttpClient.newBuilder()
+                .followRedirects(HttpClient.Redirect.NORMAL)
+                .build()
+
+            val request = HttpRequest.newBuilder()
+                .uri(protocolLibUri)
+                .GET()
+                .build()
+
+            val response = client.send(request, HttpResponse.BodyHandlers.ofInputStream())
+
+            if (response.statusCode() in 200..399) {
+                Files.copy(response.body(), protocolLibFile, StandardCopyOption.REPLACE_EXISTING)
+            } else {
+                throw RuntimeException("Error while downloading ProtocolLib: HTTP code ${response.statusCode()}")
+            }
         }
     }
 
