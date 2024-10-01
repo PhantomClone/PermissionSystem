@@ -105,14 +105,6 @@ public class PermissionSignPacketAdapterListener extends PacketAdapter implement
   }
 
   @EventHandler
-  public void onPlayerJoinEvent(PlayerJoinEvent event) {
-    javaPlugin
-        .getServer()
-        .getPluginManager()
-        .registerEvents(new AddSignInteraction(event.getPlayer(), this), javaPlugin);
-  }
-
-  @EventHandler
   public void onChunkLoad(ChunkLoadEvent event) {
     findSignsOfPDCWhichKnownSignThenConsumer(
         event.getChunk().getPersistentDataContainer(), event.getWorld(), knownSignBlocks::add);
