@@ -49,7 +49,6 @@ public class PermissionSignPacketAdapterListener extends PacketAdapter implement
       "permission_sign_row_4_time_pattern";
   private static final String SIGN_ROW_4_INFINITY_IDENTIFIER = "permission_sign_row_4_infinity";
 
-  private final JavaPlugin javaPlugin;
   private final UserPermissionRankService userPermissionRankService;
   private final LanguageService languageService;
   private final Rank defaultRank;
@@ -63,7 +62,6 @@ public class PermissionSignPacketAdapterListener extends PacketAdapter implement
       LanguageService languageService,
       Rank defaultRank) {
     super(javaPlugin, ListenerPriority.NORMAL, PacketType.Play.Server.TILE_ENTITY_DATA);
-    this.javaPlugin = javaPlugin;
     this.signNamespacedKey = NamespacedKey.fromString("permission_sign", javaPlugin);
     this.userPermissionRankService = userPermissionRankService;
     this.languageService = languageService;
