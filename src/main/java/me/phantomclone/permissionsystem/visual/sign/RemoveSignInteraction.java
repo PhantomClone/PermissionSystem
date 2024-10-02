@@ -38,6 +38,8 @@ public class RemoveSignInteraction implements Listener {
     signIDK.removeSignToKnownSign(sign);
     sign.update();
 
+    event.setCancelled(true);
+
     HandlerList.unregisterAll(this);
   }
 }
