@@ -66,5 +66,25 @@
   {
     "identifier": "permission_remove_sign_successful",
     "messageComponent": "Sign converted successfully!"
+  },
+  {
+    "identifier": "permission_command_create_rank_help",
+    "messageComponent": "Use /rank create <New Rank Name> <priority of Rank> <Prefix of rank (miniMessage)> [optional Base Rank]"
+  },
+  {
+    "identifier": "permission_command_create_rank_name_taken",
+    "messageComponent": "There is already a Rank with this name!"
+  },
+  {
+    "identifier": "permission_command_create_rank_priority_nan",
+    "messageComponent": "Priority has to be a number!"
+  },
+  {
+    "identifier": "permission_command_create_rank_successfully",
+    "messageComponent": "Rank created successfully!"
+  },
+  {
+    "identifier": "permission_command_create_rank_not_successfully",
+    "messageComponent": "Rank created not successfully!"
   }
 ]

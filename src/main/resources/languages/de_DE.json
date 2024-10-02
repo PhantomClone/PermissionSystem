@@ -66,5 +66,25 @@
   {
     "identifier": "permission_remove_sign_successful",
     "messageComponent": "Schild wurde deaktiviert!"
+  },
+  {
+    "identifier": "permission_command_create_rank_help",
+    "messageComponent": "Nutze /rank create <Neuer Rank Name> <Priorität des Rank> <Prefix des Rank (miniMessage)> [Optionaler Base Rank]"
+  },
+  {
+    "identifier": "permission_command_create_rank_name_taken",
+    "messageComponent": "Es gibt bereits einen Rank mit diesen Namen!"
+  },
+  {
+    "identifier": "permission_command_create_rank_priority_nan",
+    "messageComponent": "Priorität muss eine Zahl sein!"
+  },
+  {
+    "identifier": "permission_command_create_rank_successfully",
+    "messageComponent": "Rank wurde erstellt!"
+  },
+  {
+    "identifier": "permission_command_create_rank_not_successfully",
+    "messageComponent": "Rank konnte nicht erstellt werden!"
   }
 ]

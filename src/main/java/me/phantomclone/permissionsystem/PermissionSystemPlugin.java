@@ -8,6 +8,7 @@ import lombok.Getter;
 import me.phantomclone.permissionsystem.cache.PlayerPermissionRankUserCacheListener;
 import me.phantomclone.permissionsystem.command.CommandExecutor;
 import me.phantomclone.permissionsystem.command.CommandRegistry;
+import me.phantomclone.permissionsystem.command.permission.CreateRankCommand;
 import me.phantomclone.permissionsystem.entity.rank.Rank;
 import me.phantomclone.permissionsystem.language.LanguageService;
 import me.phantomclone.permissionsystem.language.LanguageUserService;
@@ -173,6 +174,8 @@ public class PermissionSystemPlugin extends JavaPlugin {
 
     commandRegistry.registerCommand(new AddSignCommand(this, languageService, packetListener));
     commandRegistry.registerCommand(new RemoveSignCommand(this, languageService, packetListener));
+
+    commandRegistry.registerCommand(new CreateRankCommand(rankService, languageService));
   }
 
   @Override
