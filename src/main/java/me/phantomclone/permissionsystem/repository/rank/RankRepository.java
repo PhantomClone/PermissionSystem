@@ -185,6 +185,15 @@ public class RankRepository extends QueryFactory {
                     rank.nullableBaseRank()));
   }
 
+  public CompletableFuture<Boolean> rankExists(String name) {
+    return builder(Boolean.class)
+            .query("SELECT EXISTS(SELECT 1 FROM pl_rank WHERE name=?)")
+            .parameter(paramBuilder -> paramBuilder.setString(name))
+            .readRow(row -> row.getBoolean("exists"))
+            .first()
+            .thenApply(optionalResult -> optionalResult.orElse(false));
+  }
+
   public CompletableFuture<Optional<Rank>> getRank(long id) {
     return builder(SelectRecord.class)
         .query(SELECT_BY_ID_QUERY)
@@ -317,7 +326,7 @@ public class RankRepository extends QueryFactory {
     return rank;
   }
 
-  private record SelectRecord(
+    private record SelectRecord(
       long id,
       String name,
       int priority,

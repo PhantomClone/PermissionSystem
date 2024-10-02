@@ -29,6 +29,11 @@ class RankServiceTest extends AbstractServiceIntegrationTest {
     Rank adminRank = rankService.createOrUpdateRank("admin", 10, "<red>ADMIN", modRank).join();
     assertNotEquals(-1, adminRank.id());
 
+    assertTrue(rankService.rankExists("admin").join());
+    assertTrue(rankService.rankExists("mod").join());
+    assertTrue(rankService.rankExists("supp").join());
+    assertFalse(rankService.rankExists("dev").join());
+
     assertEquals(
         1,
         rankService

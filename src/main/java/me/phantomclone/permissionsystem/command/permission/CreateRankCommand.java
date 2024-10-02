@@ -48,12 +48,10 @@ public class CreateRankCommand {
   @CommandArgument(value = "name", parseErrorMessageIdentifier = INVALID_NAME_IDENTIFIER)
   public CompletableFuture<String> checkRankName(String argument) {
     return rankService
-        .getRank(argument)
+        .rankExists(argument)
         .thenCompose(
-            optionalRank ->
-                optionalRank
-                    .map(rank -> getFailedStringFuture())
-                    .orElseGet(() -> CompletableFuture.completedFuture(argument)));
+            rankExists ->
+                rankExists ? getFailedStringFuture() : CompletableFuture.completedFuture(argument));
   }
 
   @CommandTabArgument("name")

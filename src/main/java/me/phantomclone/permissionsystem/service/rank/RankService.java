@@ -19,6 +19,9 @@ public class RankService {
         new Rank(-1, name, priority, prefixString, null, nullableBaseRank));
   }
 
+  public CompletableFuture<Boolean> rankExists(String name) {
+    return rankRepository.rankExists(name);
+  }
   public CompletableFuture<Optional<Rank>> getRank(String name) {
     return rankRepository.getRank(name);
   }
