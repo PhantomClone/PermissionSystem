@@ -18,6 +18,10 @@ class PermissionTree {
   }
 
   void add(String[] path, boolean value, LocalDateTime nullableUntil) {
+    if (!value && path.length != 0 && path[0].startsWith("-")) {
+      path[0] = path[0].substring(1);
+    }
+
     boolean isEnd = path.length == 1;
 
     head.putIfAbsent(path[0], new Entry(isEnd ? value : null, isEnd ? nullableUntil : null));
