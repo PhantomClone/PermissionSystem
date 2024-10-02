@@ -138,6 +138,7 @@ public class RankRepository extends QueryFactory {
             LEFT JOIN
                 pl_permission p ON rp.permission_id = p.id;
             """;
+  private static final String RANK_EXISTS = "SELECT EXISTS(SELECT 1 FROM pl_rank WHERE name=?)";
   private static final String DELETE_RANK = "DELETE FROM pl_rank WHERE id=?";
   private static final String INSERT_INTO_ADD_PERMISSION =
       "INSERT INTO pl_rank_permission (permission_id, rank_id) VALUES (?, ?);";
@@ -187,7 +188,7 @@ public class RankRepository extends QueryFactory {
 
   public CompletableFuture<Boolean> rankExists(String name) {
     return builder(Boolean.class)
-            .query("SELECT EXISTS(SELECT 1 FROM pl_rank WHERE name=?)")
+            .query(RANK_EXISTS)
             .parameter(paramBuilder -> paramBuilder.setString(name))
             .readRow(row -> row.getBoolean("exists"))
             .first()
