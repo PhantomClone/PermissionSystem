@@ -4,34 +4,6 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import lombok.Getter;
-import me.phantomclone.permissionsystem.cache.PlayerPermissionRankUserCacheListener;
-import me.phantomclone.permissionsystem.command.CommandExecutor;
-import me.phantomclone.permissionsystem.command.CommandRegistry;
-import me.phantomclone.permissionsystem.command.permission.CreateRankCommand;
-import me.phantomclone.permissionsystem.entity.rank.Rank;
-import me.phantomclone.permissionsystem.language.LanguageService;
-import me.phantomclone.permissionsystem.language.LanguageUserService;
-import me.phantomclone.permissionsystem.listener.chat.AsyncChatEventListener;
-import me.phantomclone.permissionsystem.listener.login.PlayerLoginListener;
-import me.phantomclone.permissionsystem.repository.permission.PermissionRepository;
-import me.phantomclone.permissionsystem.repository.rank.RankRepository;
-import me.phantomclone.permissionsystem.repository.permission.UserPermissionRepository;
-import me.phantomclone.permissionsystem.repository.rank.UserRankRepository;
-import me.phantomclone.permissionsystem.service.*;
-import me.phantomclone.permissionsystem.service.permission.PermissionService;
-import me.phantomclone.permissionsystem.service.permission.UserPermissionService;
-import me.phantomclone.permissionsystem.service.rank.RankService;
-import me.phantomclone.permissionsystem.service.rank.UserRankService;
-import me.phantomclone.permissionsystem.visual.sidebar.listener.PlayerJoinEventListener;
-import me.phantomclone.permissionsystem.visual.sidebar.SidebarService;
-import me.phantomclone.permissionsystem.visual.sign.PermissionSignPacketAdapterListener;
-import me.phantomclone.permissionsystem.visual.sign.command.AddSignCommand;
-import me.phantomclone.permissionsystem.visual.sign.command.RemoveSignCommand;
-import me.phantomclone.permissionsystem.visual.tablist.TabListService;
-import org.apache.commons.lang3.LocaleUtils;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -40,6 +12,36 @@ import java.nio.file.Paths;
 import java.util.concurrent.Executor;
 import java.util.logging.Level;
 import java.util.stream.Stream;
+import lombok.Getter;
+import me.phantomclone.permissionsystem.cache.PlayerPermissionRankUserCacheListener;
+import me.phantomclone.permissionsystem.command.CommandExecutor;
+import me.phantomclone.permissionsystem.command.CommandRegistry;
+import me.phantomclone.permissionsystem.command.permission.AddPermissionToPlayerCommand;
+import me.phantomclone.permissionsystem.command.permission.AddPermissionToRankCommand;
+import me.phantomclone.permissionsystem.command.permission.CreateRankCommand;
+import me.phantomclone.permissionsystem.command.permission.RemovePermissionFromRankCommand;
+import me.phantomclone.permissionsystem.entity.rank.Rank;
+import me.phantomclone.permissionsystem.language.LanguageService;
+import me.phantomclone.permissionsystem.language.LanguageUserService;
+import me.phantomclone.permissionsystem.listener.chat.AsyncChatEventListener;
+import me.phantomclone.permissionsystem.listener.login.PlayerLoginListener;
+import me.phantomclone.permissionsystem.repository.permission.PermissionRepository;
+import me.phantomclone.permissionsystem.repository.permission.UserPermissionRepository;
+import me.phantomclone.permissionsystem.repository.rank.RankRepository;
+import me.phantomclone.permissionsystem.repository.rank.UserRankRepository;
+import me.phantomclone.permissionsystem.service.*;
+import me.phantomclone.permissionsystem.service.permission.PermissionService;
+import me.phantomclone.permissionsystem.service.permission.UserPermissionService;
+import me.phantomclone.permissionsystem.service.rank.RankService;
+import me.phantomclone.permissionsystem.service.rank.UserRankService;
+import me.phantomclone.permissionsystem.visual.sidebar.SidebarService;
+import me.phantomclone.permissionsystem.visual.sidebar.listener.PlayerJoinEventListener;
+import me.phantomclone.permissionsystem.visual.sign.PermissionSignPacketAdapterListener;
+import me.phantomclone.permissionsystem.visual.sign.command.AddSignCommand;
+import me.phantomclone.permissionsystem.visual.sign.command.RemoveSignCommand;
+import me.phantomclone.permissionsystem.visual.tablist.TabListService;
+import org.apache.commons.lang3.LocaleUtils;
+import org.bukkit.plugin.java.JavaPlugin;
 
 @Getter
 public class PermissionSystemPlugin extends JavaPlugin {
@@ -167,15 +169,36 @@ public class PermissionSystemPlugin extends JavaPlugin {
             languageService)
         .register();
 
-    PermissionSignPacketAdapterListener packetListener = new PermissionSignPacketAdapterListener(
+    PermissionSignPacketAdapterListener packetListener =
+        new PermissionSignPacketAdapterListener(
             this, userPermissionRankService, languageService, defaultRank);
-    protocolManager.addPacketListener(
-            packetListener);
+    protocolManager.addPacketListener(packetListener);
 
     commandRegistry.registerCommand(new AddSignCommand(this, languageService, packetListener));
     commandRegistry.registerCommand(new RemoveSignCommand(this, languageService, packetListener));
 
     commandRegistry.registerCommand(new CreateRankCommand(rankService, languageService));
+    commandRegistry.registerCommand(
+        new AddPermissionToRankCommand(
+            rankService,
+            permissionService,
+            playerPermissionRankUserCacheListener,
+            userPermissionRankService,
+            languageService));
+    commandRegistry.registerCommand(
+        new RemovePermissionFromRankCommand(
+            rankService,
+            permissionService,
+            playerPermissionRankUserCacheListener,
+            userPermissionRankService,
+            languageService));
+    commandRegistry.registerCommand(
+        new AddPermissionToPlayerCommand(
+            this,
+            permissionService,
+            userPermissionService,
+            userPermissionRankService,
+            languageService));
   }
 
   @Override

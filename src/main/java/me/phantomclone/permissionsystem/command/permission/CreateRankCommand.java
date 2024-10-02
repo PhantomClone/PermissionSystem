@@ -1,5 +1,7 @@
 package me.phantomclone.permissionsystem.command.permission;
 
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
 import me.phantomclone.permissionsystem.command.annotation.CommandArgument;
 import me.phantomclone.permissionsystem.command.annotation.CommandInfo;
@@ -9,9 +11,6 @@ import me.phantomclone.permissionsystem.language.LanguageService;
 import me.phantomclone.permissionsystem.language.util.MessageUtil;
 import me.phantomclone.permissionsystem.service.rank.RankService;
 import org.bukkit.command.CommandSender;
-
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 @RequiredArgsConstructor
 public class CreateRankCommand {
@@ -69,7 +68,7 @@ public class CreateRankCommand {
     return List.of("1", "2", "10");
   }
 
-  @CommandArgument(value = "prefix", parseErrorMessageIdentifier = INVALID_PRIORITY_IDENTIFIER)
+  @CommandArgument(value = "prefix", parseErrorMessageIdentifier = HELP_IDENTIFIER)
   public String parsePrefix(String argument) {
     return argument;
   }
@@ -92,7 +91,7 @@ public class CreateRankCommand {
 
   @CommandTabArgument("?baserank")
   public List<String> baserankTabCompletion(String argument) {
-    return List.of("Base Rank", "empty");
+    return List.of("BaseRank", "empty");
   }
 
   private static CompletableFuture<String> getFailedStringFuture() {

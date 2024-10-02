@@ -86,5 +86,69 @@
   {
     "identifier": "permission_command_create_rank_not_successfully",
     "messageComponent": "Rank konnte nicht erstellt werden!"
+  },
+  {
+    "identifier": "permission_command_add_permission_to_rank_help",
+    "messageComponent": "Nutze /rank <rank> permission add <permission>"
+  },
+  {
+    "identifier": "permission_command_add_permission_to_rank_not_found",
+    "messageComponent": "Rank konnte nicht gefunden werden."
+  },
+  {
+    "identifier": "permission_command_add_permission_could_not_be_created",
+    "messageComponent": "Die Permission konnte nicht erstellt werden!"
+  },
+  {
+    "identifier": "permission_command_add_permission_could_not_add",
+    "messageComponent": "Die Permission konnte dem Rank nicht hinzugefügt werden!"
+  },
+  {
+    "identifier": "permission_command_add_permission_added",
+    "messageComponent": "Der Permission wurde dem Rank hinzugefügt. Update wird ausgerollt."
+  },
+  {
+    "identifier": "permission_command_remove_permission_from_rank_help",
+    "messageComponent": "Nutze /rank <rank> permission remove <permission>"
+  },
+  {
+    "identifier": "permission_command_remove_permission_from_rank_not_found",
+    "messageComponent": "Rank konnte nicht gefunden werden."
+  },
+  {
+    "identifier": "permission_command_remove_permission_could_find",
+    "messageComponent": "Die Permission konnte nicht gefunden werden!"
+  },
+  {
+    "identifier": "permission_command_remove_permission_could_not_remove",
+    "messageComponent": "Die Permission konnte dem Rank nicht entzogen werden!"
+  },
+  {
+    "identifier": "permission_command_remove_permission_removed",
+    "messageComponent": "Die Permission wurde dem Rank entzogen. Update wird ausgerollt."
+  },
+  {
+    "identifier": "permission_command_add_permission_player_help",
+    "messageComponent": "Nutze /permission <SpielerName> add <permission> [Optional von jetzt plus '1y1M1d1h1m']"
+  },
+  {
+    "identifier": "permission_command_add_permission_player_could_not_add",
+    "messageComponent": "Die Permission konnte dem Spieler nicht hinzugefügt werden!"
+  },
+  {
+    "identifier": "permission_command_add_permission_player_could_not_find_uuid",
+    "messageComponent": "Die UUID des Spieler konnte nicht ermittelt werden."
+  },
+  {
+    "identifier": "permission_command_add_permission_player_could_not_parse_until",
+    "messageComponent": "Zeit konnte nicht in Zeiteinheiten zerteilt werden! Pattern: '(\\d+)([yMdhm])'"
+  },
+  {
+    "identifier": "permission_command_add_permission_player_added",
+    "messageComponent": "Der Permission wurde dem Spieler hinzugefügt. Update wird ausgerollt."
+  },
+  {
+    "identifier": "permission_command_add_permission_player_could_not_be_created",
+    "messageComponent": "Die Permission konnte nicht erstellt werden!"
   }
 ]

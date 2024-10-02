@@ -1,5 +1,8 @@
 package me.phantomclone.permissionsystem.service;
 
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
 import me.phantomclone.permissionsystem.entity.PermissionRankUser;
 import me.phantomclone.permissionsystem.entity.permission.UserPermission;
@@ -8,10 +11,6 @@ import me.phantomclone.permissionsystem.event.PermissionRankUserUpdateEvent;
 import me.phantomclone.permissionsystem.service.permission.UserPermissionService;
 import me.phantomclone.permissionsystem.service.rank.UserRankService;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 @RequiredArgsConstructor
 public class UserPermissionRankService {

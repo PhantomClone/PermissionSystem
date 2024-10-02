@@ -86,5 +86,69 @@
   {
     "identifier": "permission_command_create_rank_not_successfully",
     "messageComponent": "Rank created not successfully!"
+  },
+  {
+    "identifier": "permission_command_add_permission_to_rank_help",
+    "messageComponent": "Use /rank <rank> permission add <permission>"
+  },
+  {
+    "identifier": "permission_command_add_permission_to_rank_not_found",
+    "messageComponent": "Rank could not be found."
+  },
+  {
+    "identifier": "permission_command_add_permission_could_not_be_created",
+    "messageComponent": "Permission could not be created!"
+  },
+  {
+    "identifier": "permission_command_add_permission_could_not_add",
+    "messageComponent": "Permission could not be added to the rank!"
+  },
+  {
+    "identifier": "permission_command_add_permission_added",
+    "messageComponent": "Permission successfully add. Changes will be rolled out."
+  },
+  {
+    "identifier": "permission_command_remove_permission_from_rank_help",
+    "messageComponent": "Use /rank <rank> permission remove <permission>"
+  },
+  {
+    "identifier": "permission_command_remove_permission_from_rank_not_found",
+    "messageComponent": "Rank could not be found."
+  },
+  {
+    "identifier": "permission_command_remove_permission_could_find",
+    "messageComponent": "Permission could not be found!"
+  },
+  {
+    "identifier": "permission_command_remove_permission_could_not_remove",
+    "messageComponent": "The rank's permission could not be revoked!"
+  },
+  {
+    "identifier": "permission_command_remove_permission_removed",
+    "messageComponent": "The rank's permission was revoked. Changes will be rolled out."
+  },
+  {
+    "identifier": "permission_command_add_permission_player_help",
+    "messageComponent": "Use /permission <PlayerName> add <permission> [Optional from now plus '1y1M1d1h1m']"
+  },
+  {
+    "identifier": "permission_command_add_permission_player_could_not_add",
+    "messageComponent": "The permission could not be added to the player!"
+  },
+  {
+    "identifier": "permission_command_add_permission_player_could_not_find_uuid",
+    "messageComponent": "The player's UUID could not be determined."
+  },
+  {
+    "identifier": "permission_command_add_permission_player_could_not_parse_until",
+    "messageComponent": "Time could not be parsed! Pattern: '(\\d+)([yMdhm])'"
+  },
+  {
+    "identifier": "permission_command_add_permission_player_added",
+    "messageComponent": "The permission has been added to the player. Changes will be rolled out."
+  },
+  {
+    "identifier": "permission_command_add_permission_player_could_not_be_created",
+    "messageComponent": "The permission could not be created!"
   }
 ]

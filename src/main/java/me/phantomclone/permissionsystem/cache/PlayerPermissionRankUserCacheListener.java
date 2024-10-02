@@ -1,16 +1,19 @@
 package me.phantomclone.permissionsystem.cache;
 
-import lombok.RequiredArgsConstructor;
-import me.phantomclone.permissionsystem.entity.PermissionRankUser;
-import me.phantomclone.permissionsystem.event.PermissionRankUserUpdateEvent;
-import me.phantomclone.permissionsystem.service.UserPermissionRankService;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import lombok.RequiredArgsConstructor;
+import me.phantomclone.permissionsystem.entity.PermissionRankUser;
+import me.phantomclone.permissionsystem.entity.rank.Rank;
+import me.phantomclone.permissionsystem.entity.rank.UserRank;
+import me.phantomclone.permissionsystem.event.PermissionRankUserUpdateEvent;
+import me.phantomclone.permissionsystem.service.UserPermissionRankService;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 
 @RequiredArgsConstructor
 public class PlayerPermissionRankUserCacheListener implements Listener {
@@ -31,6 +34,17 @@ public class PlayerPermissionRankUserCacheListener implements Listener {
     return userPermissionRankService
         .getPermissionRankUser(uuid)
         .thenApply(userPermissions -> updateCache(uuid, userPermissions));
+  }
+
+  public List<UUID> findUUIDsWithRank(Rank rank) {
+    return cacheMap.entrySet().stream()
+        .filter(
+            uuidPermissionRankUserEntry ->
+                uuidPermissionRankUserEntry.getValue().ranks().stream()
+                    .map(UserRank::rank)
+                    .anyMatch(r -> r.id() == rank.id()))
+        .map(Map.Entry::getKey)
+        .toList();
   }
 
   private PermissionRankUser updateCache(UUID uuid, PermissionRankUser userPermissions) {
