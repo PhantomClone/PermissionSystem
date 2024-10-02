@@ -35,7 +35,6 @@ dependencies {
     implementation("org.postgresql:postgresql:42.7.2")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.18.0")
 
-
     compileOnly("com.comphenix.protocol:ProtocolLib:5.3.0-SNAPSHOT")
     compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
 
@@ -46,6 +45,7 @@ dependencies {
     testImplementation("org.mockito:mockito-core:5.13.0")
     testImplementation("org.mockito:mockito-junit-jupiter:5.13.0")
 
+    testImplementation("com.comphenix.protocol:ProtocolLib:5.3.0-SNAPSHOT")
     testImplementation("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.0")
 }
