@@ -88,8 +88,8 @@ public class PermissibleBaseListener extends PermissibleBase implements Listener
   }
 
   @Override
-  public boolean hasPermission(String inName) {
-    return permissionTree.getValue(splitPermission(inName.toLowerCase(Locale.ENGLISH)));
+  public boolean hasPermission(@NotNull String inName) {
+    return isOp() || permissionTree.getValue(splitPermission(inName.toLowerCase(Locale.ENGLISH)));
   }
 
   @Override
