@@ -22,8 +22,11 @@ import me.phantomclone.permissionsystem.service.permission.PermissionService;
 import me.phantomclone.permissionsystem.service.permission.UserPermissionService;
 import me.phantomclone.permissionsystem.service.rank.RankService;
 import me.phantomclone.permissionsystem.service.rank.UserRankService;
+import me.phantomclone.permissionsystem.visual.sidebar.listener.PlayerJoinEventListener;
 import me.phantomclone.permissionsystem.visual.sidebar.SidebarService;
 import me.phantomclone.permissionsystem.visual.sign.PermissionSignPacketAdapterListener;
+import me.phantomclone.permissionsystem.visual.sign.command.AddSignCommand;
+import me.phantomclone.permissionsystem.visual.sign.command.RemoveSignCommand;
 import me.phantomclone.permissionsystem.visual.tablist.TabListService;
 import org.apache.commons.lang3.LocaleUtils;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -123,13 +126,6 @@ public class PermissionSystemPlugin extends JavaPlugin {
     this.playerPermissionRankUserCacheListener =
         new PlayerPermissionRankUserCacheListener(userPermissionRankService);
 
-    languageUserService.registerListener(this, commandRegistry);
-
-    getServer()
-        .getPluginManager()
-        .registerEvents(new AsyncChatEventListener(playerPermissionRankUserCacheListener), this);
-    getServer().getPluginManager().registerEvents(playerPermissionRankUserCacheListener, this);
-
     Rank defaultRank =
         rankService
             .getRank("default")
@@ -138,6 +134,28 @@ public class PermissionSystemPlugin extends JavaPlugin {
 
     this.tabListService = new TabListService(defaultRank);
 
+    languageUserService.registerListener(this, commandRegistry, languageService);
+
+    getServer()
+        .getPluginManager()
+        .registerEvents(new AsyncChatEventListener(playerPermissionRankUserCacheListener), this);
+    getServer().getPluginManager().registerEvents(playerPermissionRankUserCacheListener, this);
+    getServer()
+        .getPluginManager()
+        .registerEvents(
+            new PlayerJoinEventListener(
+                sidebarService,
+                languageService,
+                playerPermissionRankUserCacheListener,
+                getLogger()),
+            this);
+    getServer()
+        .getPluginManager()
+        .registerEvents(
+            new me.phantomclone.permissionsystem.visual.sign.listener.PlayerJoinEventListener(
+                tabListService, playerPermissionRankUserCacheListener, getLogger()),
+            this);
+
     new PlayerLoginListener(
             this,
             getLogger(),
@@ -145,14 +163,16 @@ public class PermissionSystemPlugin extends JavaPlugin {
             userRankService,
             userPermissionRankService,
             defaultRank,
-            sidebarService,
-            tabListService,
             languageService)
         .register();
 
+    PermissionSignPacketAdapterListener packetListener = new PermissionSignPacketAdapterListener(
+            this, userPermissionRankService, languageService, defaultRank);
     protocolManager.addPacketListener(
-        new PermissionSignPacketAdapterListener(
-            this, userPermissionRankService, languageService, defaultRank));
+            packetListener);
+
+    commandRegistry.registerCommand(new AddSignCommand(this, languageService, packetListener));
+    commandRegistry.registerCommand(new RemoveSignCommand(this, languageService, packetListener));
   }
 
   @Override

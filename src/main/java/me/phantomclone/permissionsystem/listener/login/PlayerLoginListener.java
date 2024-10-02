@@ -8,11 +8,7 @@ import me.phantomclone.permissionsystem.inject.PermissibleBaseListener;
 import me.phantomclone.permissionsystem.language.LanguageService;
 import me.phantomclone.permissionsystem.service.UserPermissionRankService;
 import me.phantomclone.permissionsystem.service.rank.UserRankService;
-import me.phantomclone.permissionsystem.visual.sidebar.SidebarService;
-import me.phantomclone.permissionsystem.visual.tablist.TabListService;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
@@ -27,8 +23,6 @@ import java.util.logging.Logger;
 @RequiredArgsConstructor
 public class PlayerLoginListener implements Listener {
 
-  private static final String SIDEBAR_TITLE_IDENTIFIER = "sidebar_title";
-  private static final String ROW_1_IDENTIFIER = "sidebar_row_1";
   private static final String PLAYER_JOIN_IDENTIFIER = "player_join_message";
 
   private final JavaPlugin javaPlugin;
@@ -37,8 +31,6 @@ public class PlayerLoginListener implements Listener {
   private final UserRankService userRankService;
   private final UserPermissionRankService userPermissionRankService;
   private final Rank defaultRank;
-  private final SidebarService sidebarService;
-  private final TabListService tabListService;
   private final LanguageService languageService;
 
   @EventHandler
@@ -78,7 +70,6 @@ public class PlayerLoginListener implements Listener {
       PermissionRankUser permissionRankUser = permissionRankUserCompletableFuture.join();
       PermissibleBaseListener.inject(javaPlugin, event.getPlayer(), permissionRankUser);
     } catch (Exception exception) {
-      exception.printStackTrace();
       event.disallow(
           PlayerLoginEvent.Result.KICK_OTHER, Component.text("Encounter internal server error"));
       logger.log(
@@ -95,7 +86,7 @@ public class PlayerLoginListener implements Listener {
     if (!permissionRankUserCompletableFuture.isDone()) {
       logger.log(
           Level.WARNING,
-          "Permission data of player [%s] is not loaded.",
+          "Permission data of player [{}] is not loaded.",
           event.getPlayer().getName());
     }
 
@@ -114,28 +105,6 @@ public class PlayerLoginListener implements Listener {
                                 .replacement(event.getPlayer().getName())));
 
     event.joinMessage(joinMessage);
-
-    setSidebarForPlayer(event.getPlayer(), rank);
-    tabListService.setPlayerTeams(event.getPlayer(), permissionRankUser);
-  }
-
-  private void setSidebarForPlayer(Player player, Rank rank) {
-    sidebarService.updateTitle(
-        player,
-        languageService
-            .getMessageComponent(SIDEBAR_TITLE_IDENTIFIER, player)
-            .orElse(Component.text("Permission Sidebar").color(TextColor.color(255, 0, 0))));
-    sidebarService.updateLine(player, sidebarService.createLine(0, Component.text(""), 0));
-    sidebarService.updateLine(player, sidebarService.createLine(1, rank.prefix(), 1));
-    sidebarService.updateLine(
-        player,
-        sidebarService.createLine(
-            2,
-            languageService
-                .getMessageComponent(ROW_1_IDENTIFIER, player)
-                .orElse(Component.text("Your Rank: ")),
-            2));
-    sidebarService.updateLine(player, sidebarService.createLine(3, Component.text(""), 3));
   }
 
   public void register() {

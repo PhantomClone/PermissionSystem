@@ -38,5 +38,33 @@
   {
     "identifier": "player_join_message",
     "messageComponent": " {player_name} <gray>ist dem Server beigetreten!"
+  },
+  {
+    "identifier": "command_language_change_successfully",
+    "messageComponent": "Sprache erfolgreich geändert."
+  },
+  {
+    "identifier": "permission_click_sign_to_add",
+    "messageComponent": "Klick ein permission Schild an, um es zu aktivieren."
+  },
+  {
+    "identifier": "permission_click_sign_help_to_add",
+    "messageComponent": "Nutze /permission sign register"
+  },
+  {
+    "identifier": "permission_click_sign_to_remove",
+    "messageComponent": "Klick ein permission Schild an, um es zu deaktivieren."
+  },
+  {
+    "identifier": "permission_click_sign_help_to_remove",
+    "messageComponent": "Nutze /permission sign unregister"
+  },
+  {
+    "identifier": "permission_add_sign_successful",
+    "messageComponent": "Schild wurde aktiviert!"
+  },
+  {
+    "identifier": "permission_remove_sign_successful",
+    "messageComponent": "Schild wurde deaktiviert!"
   }
 ]

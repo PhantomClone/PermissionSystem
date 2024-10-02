@@ -2,9 +2,10 @@ name: PermissionSystem
 main: me.phantomclone.permissionsystem.PermissionSystemPlugin
 author: PhantomClone
 version: ${version}
-description: Playlegend applicant task
+description: PlayLegend applicant task
 api-version: 1.21.1
 depend:
   - ProtocolLib
 commands:
   language:
+  permission:

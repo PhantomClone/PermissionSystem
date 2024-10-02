@@ -23,9 +23,9 @@ public class LanguageUserService {
 
   }
 
-  public void registerListener(JavaPlugin javaPlugin, CommandRegistry commandRegistry) {
+  public void registerListener(JavaPlugin javaPlugin, CommandRegistry commandRegistry, LanguageService languageService) {
     javaPlugin.getServer().getPluginManager().registerEvents(new PlayerLoginEventListener(this), javaPlugin);
-    commandRegistry.registerCommand(new LanguageChangeLocaleCommand(this));
+    commandRegistry.registerCommand(new LanguageChangeLocaleCommand(languageService, this));
   }
 
   public void storeLanguageOnlinePlayer(Player player, Locale locale) {

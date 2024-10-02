@@ -38,5 +38,33 @@
   {
     "identifier": "player_join_message",
     "messageComponent": " {player_name} <gray>has joined the Server!"
+  },
+  {
+    "identifier": "command_language_change_successfully",
+    "messageComponent": "Change locale successfully."
+  },
+  {
+    "identifier": "permission_click_sign_to_add",
+    "messageComponent": "Click a sign to convert to permission sign."
+  },
+  {
+    "identifier": "permission_click_sign_help_to_add",
+    "messageComponent": "Use /permission sign register"
+  },
+  {
+    "identifier": "permission_click_sign_to_remove",
+    "messageComponent": "Click a permission sign to convert to normal sign."
+  },
+  {
+    "identifier": "permission_click_sign_help_to_remove",
+    "messageComponent": "Use /permission sign unregister"
+  },
+  {
+    "identifier": "permission_add_sign_successful",
+    "messageComponent": "Sign converted successfully!"
+  },
+  {
+    "identifier": "permission_remove_sign_successful",
+    "messageComponent": "Sign converted successfully!"
   }
 ]
