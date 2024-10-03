@@ -55,7 +55,7 @@ public class CreateRankCommand {
 
   @CommandTabArgument("name")
   public List<String> nameTabCompletion(String argument) {
-    return List.of("RankName");
+    return List.of("RANK_NAME");
   }
 
   @CommandArgument(value = "priority", parseErrorMessageIdentifier = INVALID_PRIORITY_IDENTIFIER)

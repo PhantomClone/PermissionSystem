@@ -1,5 +1,13 @@
 package me.phantomclone.permissionsystem.command;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import lombok.RequiredArgsConstructor;
 import me.phantomclone.permissionsystem.command.annotation.CommandArgument;
 import me.phantomclone.permissionsystem.language.LanguageService;
@@ -9,15 +17,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.*;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @RequiredArgsConstructor
 public class CommandExecutor implements TabExecutor {
@@ -84,8 +83,21 @@ public class CommandExecutor implements TabExecutor {
             info ->
                 info.commandInfo().permission().isEmpty()
                     || sender.hasPermission(info.commandInfo().permission()))
+        .filter(
+            info -> {
+              for (int i = 0; i < arguments.length - 1; i++) {
+                if (info.commandArguments()[i] == null) {
+                  if (!arguments[i].equalsIgnoreCase(info.commandInfo().commandSyntax()[i + 1])) {
+                    return false;
+                  }
+                }
+              }
+
+              return true;
+            })
         .map(info -> invoke(info, sender, arguments))
         .flatMap(Collection::stream)
+        .distinct()
         .toList();
   }
 

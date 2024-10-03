@@ -150,5 +150,69 @@
   {
     "identifier": "permission_command_add_permission_player_could_not_be_created",
     "messageComponent": "Die Permission konnte nicht erstellt werden!"
+  },
+  {
+    "identifier": "permission_command_remove_permission_player_help",
+    "messageComponent": "Nutze /permission <SpielerName> remove <permission>"
+  },
+  {
+    "identifier": "permission_command_remove_permission_player_removed",
+    "messageComponent": "Die Permission wurde dem Spieler entfernt. Update wird ausgerollt."
+  },
+  {
+    "identifier": "permission_command_remove_permission_player_could_not_remove",
+    "messageComponent": "Die Permission konnte dem Spieler nicht entzogen werden!"
+  },
+  {
+    "identifier": "permission_command_remove_permission_player_could_not_find_uuid",
+    "messageComponent": "Die UUID des Spieler konnte nicht ermittelt werden."
+  },
+  {
+    "identifier": "permission_command_remove_permission_player_could_not_be_found",
+    "messageComponent": "Die Permission konnte nicht gefunden werden!"
+  },
+  {
+    "identifier": "permission_command_add_rank_to_player_help",
+    "messageComponent": "Nutze /rank <RankName> add user <username> [Optional von jetzt plus '1y1M1d1h1m']"
+  },
+  {
+    "identifier": "permission_command_add_rank_to_player_could_not_add",
+    "messageComponent": "Der Rank konnte dem Spieler nicht hinzugefügt werden!"
+  },
+  {
+    "identifier": "permission_command_add_rank_to_player_could_not_find_uuid",
+    "messageComponent": "Die UUID des Spieler konnte nicht ermittelt werden."
+  },
+  {
+    "identifier": "permission_command_add_rank_to_player_could_not_parse_until",
+    "messageComponent": "Zeit konnte nicht in Zeiteinheiten zerteilt werden! Pattern: '(\\d+)([yMdhm])'"
+  },
+  {
+    "identifier": "permission_command_add_rank_to_player_added",
+    "messageComponent": "Der Rank wurde dem Spieler hinzugefügt. Update wird ausgerollt."
+  },
+  {
+    "identifier": "permission_command_add_rank_to_player_could_not_be_found",
+    "messageComponent": "Der Rank konnte nicht gefunden werden!"
+  },
+  {
+    "identifier": "permission_command_remove_rank_from_player_help",
+    "messageComponent": "Nutze /rank <RankName> remove user <username>"
+  },
+  {
+    "identifier": "permission_command_remove_rank_from_player_could_not_remove",
+    "messageComponent": "Der Rank konnte dem Spieler nicht entzogen werden!"
+  },
+  {
+    "identifier": "permission_command_remove_rank_from_player_could_not_find_uuid",
+    "messageComponent": "Die UUID des Spieler konnte nicht ermittelt werden."
+  },
+  {
+    "identifier": "permission_command_remove_rank_from_player_removed",
+    "messageComponent": "Der Rank wurde dem Spieler entzogen. Update wird ausgerollt."
+  },
+  {
+    "identifier": "permission_command_remove_rank_from_player_could_not_be_found",
+    "messageComponent": "Der Rank konnte nicht gefunden werden!"
   }
 ]
