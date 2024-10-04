@@ -3,13 +3,13 @@
 Bewerbungsaufgabe für PlayLegend - PermissionSystem
 
 Java Version:<br>
-21
+21<br>
 Gradle Version:<br>
-8.5
+8.5<br>
 Gradle JVM Version:<br>
-21
+21<br>
 Minecraft Version:
-1.21.1
+1.21.1<br>
 
 ### Benutze Dependecies:
 
@@ -26,7 +26,7 @@ Minecraft Version:
 ##### testPlugin
 
 Startet mit dem gradle Plugin dev.s7a.gradle.minecraft.server einen Minecraft server.<br>
-Läd hierfür eine ProtocolLib Plugin
+Lädt hierfür eine ProtocolLib Plugin
 von [ProtocolLib Jenkins](https://ci.dmulloy2.net/job/ProtocolLib/732/artifact/build/libs/) herrunter.<br>
 Startet ein PostgreSQL Docker Container aus gehen von der src/test/resources/compose.yaml.<br>
 
@@ -51,14 +51,14 @@ in Deutsch zu finden.
 
 ### Visuals:
 
-- Sidebar
+- Sidebar<br>
   Zeigt denn Prefix des Ranks mit der höchsten Priorität auf der Seiten Tabelle an.
   Titel und Zeile 1 sind in der Sprach jsons Konfigurierbar (sidebar_title & sidebar_row_1).
-- Sign
+- Sign<br>
   Mit dem Kommandon permission sign <register/unregister> können auf einem Schild aktiviert/deaktiviert werden.
   Zeigt Rang und Dauer an. Können in der Sprach jsons konfiguriert werden. (permission_sign_row_<1..4>)
   Für die Umsetzung wird ProtocolLib verwendet!
-- TabList
+- TabList<br>
   Zeigt in der TabList die Spieler mit dem Prefix von ihrem höchsten Rank an. Sortiert nach Priorität des höchsten
   Ranks.
 
