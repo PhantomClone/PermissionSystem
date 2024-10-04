@@ -1,5 +1,8 @@
-package me.phantomclone.permissionsystem.language.command;
+package me.phantomclone.permissionsystem.command.language;
 
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import me.phantomclone.permissionsystem.command.annotation.CommandArgument;
 import me.phantomclone.permissionsystem.command.annotation.CommandInfo;
@@ -9,10 +12,6 @@ import me.phantomclone.permissionsystem.language.LanguageUserService;
 import me.phantomclone.permissionsystem.language.util.MessageUtil;
 import org.apache.commons.lang3.LocaleUtils;
 import org.bukkit.entity.Player;
-
-import java.util.List;
-import java.util.Locale;
-import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 public class LanguageChangeLocaleCommand {

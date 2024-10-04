@@ -17,6 +17,8 @@ import me.phantomclone.permissionsystem.cache.PlayerPermissionRankUserCacheListe
 import me.phantomclone.permissionsystem.command.CommandExecutor;
 import me.phantomclone.permissionsystem.command.CommandRegistry;
 import me.phantomclone.permissionsystem.command.permission.*;
+import me.phantomclone.permissionsystem.command.visual.sign.AddSignCommand;
+import me.phantomclone.permissionsystem.command.visual.sign.RemoveSignCommand;
 import me.phantomclone.permissionsystem.entity.rank.Rank;
 import me.phantomclone.permissionsystem.language.LanguageService;
 import me.phantomclone.permissionsystem.language.LanguageUserService;
@@ -34,8 +36,6 @@ import me.phantomclone.permissionsystem.service.rank.UserRankService;
 import me.phantomclone.permissionsystem.visual.sidebar.SidebarService;
 import me.phantomclone.permissionsystem.visual.sidebar.listener.PlayerJoinEventListener;
 import me.phantomclone.permissionsystem.visual.sign.PermissionSignPacketAdapterListener;
-import me.phantomclone.permissionsystem.visual.sign.command.AddSignCommand;
-import me.phantomclone.permissionsystem.visual.sign.command.RemoveSignCommand;
 import me.phantomclone.permissionsystem.visual.tablist.TabListService;
 import org.apache.commons.lang3.LocaleUtils;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -62,6 +62,8 @@ public class PermissionSystemPlugin extends JavaPlugin {
 
   private LanguageService languageService;
   private LanguageUserService languageUserService;
+
+  private PermissionSignPacketAdapterListener packetListener;
 
   private CommandRegistry commandRegistry;
   private CommandExecutor commandExecutor;
@@ -111,21 +113,11 @@ public class PermissionSystemPlugin extends JavaPlugin {
 
     this.sidebarService = new SidebarService();
 
-    if (!new File(new File(getDataFolder(), "languages"), "de_DE.json").exists()) {
-      saveResource("languages/de_DE.json", true);
-    }
-    if (!new File(new File(getDataFolder(), "languages"), "en.json").exists()) {
-      saveResource("languages/en_US.json", true);
-    }
-
-    loadLanguageFiles();
+    copyIfNotExistsAndLoadLanguageFiles();
   }
 
   @Override
   public void onEnable() {
-    this.playerPermissionRankUserCacheListener =
-        new PlayerPermissionRankUserCacheListener(userPermissionRankService);
-
     Rank defaultRank =
         rankService
             .getRank("default")
@@ -134,6 +126,14 @@ public class PermissionSystemPlugin extends JavaPlugin {
 
     this.tabListService = new TabListService(defaultRank);
 
+    registerEvents(defaultRank);
+
+    registerCommand();
+  }
+
+  private void registerEvents(Rank defaultRank) {
+    this.playerPermissionRankUserCacheListener =
+        new PlayerPermissionRankUserCacheListener(userPermissionRankService);
     languageUserService.registerListener(this, commandRegistry, languageService);
 
     getServer()
@@ -144,16 +144,18 @@ public class PermissionSystemPlugin extends JavaPlugin {
         .getPluginManager()
         .registerEvents(
             new PlayerJoinEventListener(
+                this,
                 sidebarService,
                 languageService,
                 playerPermissionRankUserCacheListener,
-                getLogger()),
+                getLogger(),
+                defaultRank),
             this);
     getServer()
         .getPluginManager()
         .registerEvents(
-            new me.phantomclone.permissionsystem.visual.sign.listener.PlayerJoinEventListener(
-                tabListService, playerPermissionRankUserCacheListener, getLogger()),
+            new me.phantomclone.permissionsystem.visual.tablist.listener.PlayerJoinEventListener(
+                this, tabListService, playerPermissionRankUserCacheListener, getLogger()),
             this);
 
     new PlayerLoginListener(
@@ -166,11 +168,18 @@ public class PermissionSystemPlugin extends JavaPlugin {
             languageService)
         .register();
 
-    PermissionSignPacketAdapterListener packetListener =
+    packetListener =
         new PermissionSignPacketAdapterListener(
             this, userPermissionRankService, languageService, defaultRank);
     protocolManager.addPacketListener(packetListener);
+  }
 
+  @Override
+  public void onDisable() {
+    dataSource.close();
+  }
+
+  private void registerCommand() {
     commandRegistry.registerCommand(new AddSignCommand(this, languageService, packetListener));
     commandRegistry.registerCommand(new RemoveSignCommand(this, languageService, packetListener));
 
@@ -211,18 +220,20 @@ public class PermissionSystemPlugin extends JavaPlugin {
             this, rankService, userRankService, userPermissionRankService, languageService));
   }
 
-  @Override
-  public void onDisable() {
-    dataSource.close();
-  }
-
   private Executor getAsyncExecutor() {
     return runnable -> getServer().getAsyncScheduler().runNow(this, task -> runnable.run());
   }
 
-  private void loadLanguageFiles() {
-    File languagesFolder = new File(getDataFolder(), "languages/");
-    try (Stream<Path> langugesFilesStream = Files.list(Paths.get(languagesFolder.getPath()))) {
+  private void copyIfNotExistsAndLoadLanguageFiles() {
+    File languageFolder = new File(getDataFolder(), "languages");
+    if (!new File(languageFolder, "de_DE.json").exists()) {
+      saveResource("languages/de_DE.json", true);
+    }
+    if (!new File(languageFolder, "en.json").exists()) {
+      saveResource("languages/en_US.json", true);
+    }
+
+    try (Stream<Path> langugesFilesStream = Files.list(Paths.get(languageFolder.getPath()))) {
       langugesFilesStream
           .filter(
               path ->

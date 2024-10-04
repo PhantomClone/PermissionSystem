@@ -1,16 +1,4 @@
-package me.phantomclone.permissionsystem.visual.sign.command;
-
-import me.phantomclone.permissionsystem.command.AbstractCommandTest;
-import me.phantomclone.permissionsystem.visual.sign.AddSignInteraction;
-import me.phantomclone.permissionsystem.visual.sign.PermissionSignPacketAdapterListener;
-import net.kyori.adventure.text.Component;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginManager;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-
-import java.util.List;
-import java.util.Optional;
+package me.phantomclone.permissionsystem.command.visual.sign;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -21,6 +9,17 @@ import static org.mockito.ArgumentMatchers.matches;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.List;
+import java.util.Optional;
+import me.phantomclone.permissionsystem.command.AbstractCommandTest;
+import me.phantomclone.permissionsystem.visual.sign.AddSignInteraction;
+import me.phantomclone.permissionsystem.visual.sign.PermissionSignPacketAdapterListener;
+import net.kyori.adventure.text.Component;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 class AddSignCommandTest extends AbstractCommandTest<AddSignCommand> {
 

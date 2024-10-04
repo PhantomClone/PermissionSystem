@@ -1,18 +1,17 @@
 package me.phantomclone.permissionsystem.language;
 
+import static java.util.Locale.GERMANY;
+
+import java.util.Locale;
+import java.util.Optional;
 import me.phantomclone.permissionsystem.command.CommandRegistry;
-import me.phantomclone.permissionsystem.language.command.LanguageChangeLocaleCommand;
+import me.phantomclone.permissionsystem.command.language.LanguageChangeLocaleCommand;
 import me.phantomclone.permissionsystem.language.listener.PlayerLoginEventListener;
 import org.apache.commons.lang3.LocaleUtils;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.Locale;
-import java.util.Optional;
-
-import static java.util.Locale.GERMANY;
 
 public class LanguageUserService {
 

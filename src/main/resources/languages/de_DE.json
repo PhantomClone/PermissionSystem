@@ -21,7 +21,7 @@
   },
   {
     "identifier": "permission_sign_row_4_time_pattern",
-    "messageComponent": "{days} Tag(e), {hours} Stunde(n), {minutes} Minute(n) und {seconds} Sekunde(n)!"
+    "messageComponent": "{days}D {hours}H, {minutes}m {seconds}s!"
   },
   {
     "identifier": "permission_sign_row_4_infinity",
@@ -173,7 +173,7 @@
   },
   {
     "identifier": "permission_command_add_rank_to_player_help",
-    "messageComponent": "Nutze /rank <RankName> add user <username> [Optional von jetzt plus '1y1M1d1h1m']"
+    "messageComponent": "Nutze /rank <RankName> add user <SpielerName> [Optional von jetzt plus '1y1M1d1h1m']"
   },
   {
     "identifier": "permission_command_add_rank_to_player_could_not_add",
@@ -197,7 +197,7 @@
   },
   {
     "identifier": "permission_command_remove_rank_from_player_help",
-    "messageComponent": "Nutze /rank <RankName> remove user <username>"
+    "messageComponent": "Nutze /rank <RankName> remove user <SpielerName>"
   },
   {
     "identifier": "permission_command_remove_rank_from_player_could_not_remove",

@@ -1,19 +1,18 @@
-package me.phantomclone.permissionsystem.language.command;
-
-import me.phantomclone.permissionsystem.command.AbstractCommandTest;
-import net.kyori.adventure.text.Component;
-import org.bukkit.entity.Player;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-
-import java.util.List;
-import java.util.Optional;
+package me.phantomclone.permissionsystem.command.language;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.matches;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.List;
+import java.util.Optional;
+import me.phantomclone.permissionsystem.command.AbstractCommandTest;
+import net.kyori.adventure.text.Component;
+import org.bukkit.entity.Player;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 class LanguageChangeLocaleCommandTest extends AbstractCommandTest<LanguageChangeLocaleCommand> {
 

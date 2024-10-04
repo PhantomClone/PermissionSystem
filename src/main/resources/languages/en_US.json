@@ -21,7 +21,7 @@
   },
   {
     "identifier": "permission_sign_row_4_time_pattern",
-    "messageComponent": "{days} day(e), {hours} hour(s), {minutes} minute(s) und {seconds} second(s)!"
+    "messageComponent": "{days}D {hours}H, {minutes}m {seconds}s!"
   },
   {
     "identifier": "permission_sign_row_4_infinity",
