@@ -8,7 +8,7 @@ Gradle Version:<br>
 8.5<br>
 Gradle JVM Version:<br>
 21<br>
-Minecraft Version:
+Minecraft Version:<br>
 1.21.1<br>
 
 ### Benutze Dependecies:
