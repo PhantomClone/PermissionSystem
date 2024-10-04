@@ -127,6 +127,7 @@ Sollte von einem Rank die Gültigkeit auslaufen, wird diese nicht in den Visuals
 - delete rank command. Repository already supports delete cascade.
 - junit test for commands.
 - make competition async & display ranks in permission command as completion.
+- handle case sign destroyed by player & server
 
 ### Database struct (POSTGRESQL!):
 
