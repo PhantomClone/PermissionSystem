@@ -4,7 +4,6 @@ import me.phantomclone.permissionsystem.command.AbstractCommandTest;
 import me.phantomclone.permissionsystem.visual.sign.PermissionSignPacketAdapterListener;
 import me.phantomclone.permissionsystem.visual.sign.RemoveSignInteraction;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.junit.jupiter.api.Test;
@@ -27,7 +26,6 @@ class RemoveSignCommandTest extends AbstractCommandTest<RemoveSignCommand> {
 
   @Mock Player player;
   @Mock PermissionSignPacketAdapterListener permissionSignPacketAdapterListener;
-  @Mock Server server;
   @Mock PluginManager pluginManager;
 
   protected RemoveSignCommandTest() {

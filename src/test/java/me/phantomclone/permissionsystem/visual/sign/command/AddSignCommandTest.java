@@ -4,7 +4,6 @@ import me.phantomclone.permissionsystem.command.AbstractCommandTest;
 import me.phantomclone.permissionsystem.visual.sign.AddSignInteraction;
 import me.phantomclone.permissionsystem.visual.sign.PermissionSignPacketAdapterListener;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.junit.jupiter.api.Test;
@@ -27,7 +26,6 @@ class AddSignCommandTest extends AbstractCommandTest<AddSignCommand> {
 
   @Mock Player player;
   @Mock PermissionSignPacketAdapterListener permissionSignPacketAdapterListener;
-  @Mock Server server;
   @Mock PluginManager pluginManager;
 
   protected AddSignCommandTest() {

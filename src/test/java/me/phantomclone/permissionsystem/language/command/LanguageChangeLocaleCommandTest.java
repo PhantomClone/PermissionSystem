@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -68,4 +69,15 @@ class LanguageChangeLocaleCommandTest extends AbstractCommandTest<LanguageChange
     verify(languageService)
         .getMessageComponent(matches("command_language_locale_help"), eq(player));
   }
+
+  @Test
+  void testTabCompletionOnCreate() {
+    List<String> tabCompletion =
+            commandExecutor.onTabComplete(player, pluginCommand, "language", new String[] {"de"});
+
+    assertNotNull(tabCompletion);
+    assertEquals(1, tabCompletion.size());
+    assertEquals("de_DE", tabCompletion.getFirst());
+  }
+
 }

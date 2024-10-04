@@ -50,7 +50,7 @@ public class CreateRankCommand {
         .rankExists(argument)
         .thenCompose(
             rankExists ->
-                rankExists ? getFailedStringFuture() : CompletableFuture.completedFuture(argument));
+                rankExists == null || rankExists ? getFailedStringFuture() : CompletableFuture.completedFuture(argument));
   }
 
   @CommandTabArgument("name")
@@ -90,7 +90,7 @@ public class CreateRankCommand {
   }
 
   @CommandTabArgument("?baserank")
-  public List<String> baserankTabCompletion(String argument) {
+  public List<String> baseRankTabCompletion(String argument) {
     return List.of("BaseRank", "empty");
   }
 
